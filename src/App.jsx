@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
-import Mainroutes from '../routes/Mainroutes'
 import { account } from '../src/lib/appwrite';
+import Mainroutes from './routes/Mainroutes'
+import Nav from './components/Nav';
 
 const App = () => {
   useEffect(() => {
@@ -16,7 +17,10 @@ const App = () => {
         checkUserSession();
     }, []);
   return (
-    <Mainroutes/>
+    <>
+      <Nav/>
+      <Mainroutes/>
+    </>
   )
 }
 
