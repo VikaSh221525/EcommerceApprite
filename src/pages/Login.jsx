@@ -1,42 +1,18 @@
 import React from 'react'
 import { useForm } from 'react-hook-form';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
-import { Link, useNavigate } from 'react-router-dom';
-import { nanoid } from 'nanoid';
-import { account, databases } from '../lib/appwrite';
-import { ID } from 'appwrite';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 
-const Register = () => {
+const Login = () => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
-    const navigate = useNavigate();
+    const navigate = useNavigate()
 
-    const RegisterHandler = async (user) => {
-        try {
-            const newUser = await account.create(ID.unique(), user.email, user.password, user.username);
-
-            const adminEmails = ["admin1@gmail.com", "vikash@gmail.com"];
-            const isAdmin = adminEmails.includes(user.email);
-
-            const doc = await databases.createDocument(
-                '6894936d0026edd36555',
-                '689495a2000eefa9b1ea',
-                ID.unique(),
-                {
-                    username: user.username,
-                    email: user.email,
-                    userId: newUser.$id,
-                    isAdmin: isAdmin
-                }
-            )
-            console.log('created doc:', doc);
-            
-            navigate('/login');
-
-        } catch (err) {
-            console.log("Register error:", err);
-
-        }
-    };
+    const LoginHandler = (user) => {
+        console.log(user);
+        reset();
+        navigate('/');
+        
+    }
     return (
         <>
             <div className='w-full min-h-screen'>
@@ -54,15 +30,10 @@ const Register = () => {
                             <h1 className='absolute text-3xl text-white top-5 left-5 font-bold'>TechPulse</h1>
                         </div>
                         <div className='w-1/2 px-10 pt-20 pb-15'>
-                            <form onSubmit={handleSubmit(RegisterHandler)} className='flex flex-col gap-7'>
+                            <form onSubmit={handleSubmit(LoginHandler)} className='flex flex-col gap-7'>
                                 <div>
                                     <h1 className='text-[2rem] font-bold '>Welcome to TechPulse!</h1>
                                     <p className='text-gray-500'>Login your account</p>
-                                </div>
-                                <div>
-                                    <label className='text-gray-700 font-semibold'>Username</label>
-                                    <input type="text" placeholder='Enter your username' {...register("username", { required: "Username is required" })} className='w-full px-4 py-2 rounded-4xl border-2 border-gray-300 focus:outline-none focus:border-blue-500 mt-2' />
-                                    {errors.username && <p className='text-red-500 text-sm'>{errors.username.message}</p>}
                                 </div>
                                 <div>
                                     <label className='text-gray-700 font-semibold'>Email</label>
@@ -74,14 +45,17 @@ const Register = () => {
                                     <input type="password" placeholder='Enter your password' {...register("password", { required: "Password is required" })} className='w-full px-4 py-2 rounded-4xl border-2 border-gray-300 focus:outline-none focus:border-blue-500 mt-2' />
                                     {errors.password && <p className='text-red-500 text-sm'>{errors.password.message}</p>}
                                 </div>
-                                <input type="submit" value={`Register`} className='bg-blue-500 text-white px-12 py-2 rounded-4xl hover:bg-blue-600 transition duration-200 cursor-pointer shadow-md' />
+                                <div className='flex justify-between items-center'>
+                                    <input type='submit' className='bg-blue-500 text-white px-12 py-2 rounded-4xl hover:bg-blue-600 transition duration-200 cursor-pointer shadow-md' value={`Login`} />
+                                    <NavLink className='text-blue-500 hover:underline'>Forgot Password?</NavLink>
+                                </div>
                             </form>
 
                             <div className='mt-10'>
                                 <p className='text-gray-500 flex items-center gap-3'>Create account with <span><img src="/facebook.png" alt="" /></span> <span><img src="/google.png" alt="" /></span> </p>
                             </div>
                             <div className='mt-5'>
-                                <p className='text-gray-500'>Already have an account? <Link to='/login' className='text-blue-500 cursor-pointer hover:underline'>Login</Link></p>
+                                <p className='text-gray-500'>Don't have an account? <Link to='/register' className='text-blue-500 cursor-pointer hover:underline'>Register</Link></p>
                             </div>
                         </div>
                     </div>
@@ -92,4 +66,4 @@ const Register = () => {
     )
 }
 
-export default Register
+export default Login

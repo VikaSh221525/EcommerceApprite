@@ -40,7 +40,7 @@ const Nav = () => {
                             <i class="ri-shopping-cart-2-fill text-2xl"></i>
                             <span className='bg-blue-500 absolute -top-2 -right-1 rounded-full px-1.5 text-sm text-white'> {x} </span>
                         </NavLink>
-                        <NavLink to='/login' className='bg-gray-200 py-1 px-2 rounded'><span><i class="ri-user-3-line text-xl text-blue-500"></i> Login/SignUp</span></NavLink>
+                        <NavLink to='/login' className='bg-gray-200 py-1 px-2 rounded'><span><i class="ri-user-3-line text-xl text-blue-500"></i>Login/SignUp</span></NavLink>
                     </div>
                 </div>
             </div>

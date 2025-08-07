@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { account } from '../src/lib/appwrite';
 import Mainroutes from './routes/Mainroutes'
 import Nav from './components/Nav';
+import Footer from './components/Footer';
 
 const App = () => {
   useEffect(() => {
@@ -20,6 +21,7 @@ const App = () => {
     <>
       <Nav/>
       <Mainroutes/>
+      <Footer/>
     </>
   )
 }
