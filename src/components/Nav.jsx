@@ -1,8 +1,14 @@
 import { Search, ChartColumnStacked } from 'lucide-react'
 import { motion } from "motion/react"
+import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
+import { asyncLogoutUser } from '../store/actions/UserAction'
 
 const Nav = () => {
+    const dispatch = useDispatch();
+    const currentUser = useSelector((state) => state.user.currentUser)
+    console.log(currentUser);
+    
     const x = 0
     return (
         <>
@@ -40,7 +46,20 @@ const Nav = () => {
                             <i class="ri-shopping-cart-2-fill text-2xl"></i>
                             <span className='bg-blue-500 absolute -top-2 -right-1 rounded-full px-1.5 text-sm text-white'> {x} </span>
                         </NavLink>
-                        <NavLink to='/login' className='bg-gray-200 py-1 px-2 rounded'><span><i class="ri-user-3-line text-xl text-blue-500"></i>Login/SignUp</span></NavLink>
+                        {currentUser ?
+                            <>
+                                <span className='bg-gray-200 py-1 px-2 rounded flex items-center gap-2'>
+                                    <i className="ri-user-3-line text-xl text-blue-500"></i>
+                                    {currentUser.name}
+                                </span>
+                                <button
+                                    onClick={() => dispatch(asyncLogoutUser())}
+                                    className="bg-red-500 text-white text-sm py-1 px-2 rounded hover:bg-red-600 transition"
+                                >
+                                    Logout
+                                </button>
+                            </> :
+                            (<NavLink to='/login' className='bg-gray-200 py-1 px-2 rounded'><span><i class="ri-user-3-line text-xl text-blue-500"></i>Login/SignUp</span></NavLink>)}
                     </div>
                 </div>
             </div>

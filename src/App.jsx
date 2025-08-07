@@ -1,22 +1,23 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { account } from '../src/lib/appwrite';
 import Mainroutes from './routes/Mainroutes'
 import Nav from './components/Nav';
 import Footer from './components/Footer';
+import { useDispatch } from 'react-redux';
+import { loginuser } from './store/reducers/UserSlice';
 
 const App = () => {
-  useEffect(() => {
-        async function checkUserSession() {
-            try {
-                const user = await account.get();
-                console.log("User session is active:", user);
-            } catch (error) {
-                console.log("No active user session:", error.message);
-            }
-        }
+  const dispatch = useDispatch();
+  const [IsUserRestored, setIsUserRestored] = useState(false)
+  useEffect(()=>{
+    const user = JSON.parse(localStorage.getItem("currentUser"));
+    if(user){
+      dispatch(loginuser(user));
+    }
+    setIsUserRestored(true);
+  }, [dispatch])
 
-        checkUserSession();
-    }, []);
+  if(!IsUserRestored) return null;
   return (
     <>
       <Nav/>
