@@ -1,8 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { Link, useNavigate } from 'react-router-dom';
-import { nanoid } from 'nanoid';
 import { account, databases } from '../lib/appwrite';
 import { ID } from 'appwrite';
 
@@ -29,7 +28,7 @@ const Register = () => {
                 }
             )
             console.log('created doc:', doc);
-            
+
             navigate('/login');
 
         } catch (err) {
@@ -37,6 +36,12 @@ const Register = () => {
 
         }
     };
+
+    const [showPassword, setshowPassword] = useState(false);
+
+    const togglepasswordvisibility = () => {
+        setshowPassword(!showPassword)
+    }
     return (
         <>
             <div className='w-full min-h-screen'>
@@ -71,7 +76,12 @@ const Register = () => {
                                 </div>
                                 <div>
                                     <label className='text-gray-700 font-semibold'>Password</label>
-                                    <input type="password" placeholder='Enter your password' {...register("password", { required: "Password is required" })} className='w-full px-4 py-2 rounded-4xl border-2 border-gray-300 focus:outline-none focus:border-blue-500 mt-2' />
+                                    <div className='relative'>
+                                        <input type={showPassword ? "text" : "password"} placeholder='Enter your password' {...register("password", { required: "Password is required" })} className='w-full px-4 py-2 rounded-4xl border-2 border-gray-300 focus:outline-none focus:border-blue-500 mt-2' />
+                                        <button type='button' onClick={togglepasswordvisibility} className='absolute top-4 right-4 text-lg'>
+                                            {showPassword ? <i className="ri-eye-line"></i> : <i className="ri-eye-close-line"></i>}
+                                        </button>
+                                    </div>
                                     {errors.password && <p className='text-red-500 text-sm'>{errors.password.message}</p>}
                                 </div>
                                 <input type="submit" value={`Register`} className='bg-blue-500 text-white px-12 py-2 rounded-4xl hover:bg-blue-600 transition duration-200 cursor-pointer shadow-md' />

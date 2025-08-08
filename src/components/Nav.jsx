@@ -8,7 +8,7 @@ const Nav = () => {
     const dispatch = useDispatch();
     const currentUser = useSelector((state) => state.user.currentUser)
     console.log(currentUser);
-    
+
     const x = 0
     return (
         <>
@@ -22,8 +22,13 @@ const Nav = () => {
                     <div className='flex gap-5'>
                         <NavLink className='flex gap-2 items-center group'><i class="ri-percent-fill text-gray-400 group-hover:text-blue-500"></i> <p className='text-gray-400 group-hover:text-blue-500'>Today's Deals</p> </NavLink>
                         <NavLink className='flex gap-2 items-center group'><i class="ri-customer-service-2-fill text-gray-400 group-hover:text-blue-500"></i> <p className='text-gray-400 group-hover:text-blue-500'>Support</p> </NavLink>
-                        <div className='flex gap-2 items-center'>
-                            <i class="ri-user-3-line text-gray-400 group-hover:text-blue-500"></i> <p className='text-gray-400 group-hover:text-blue-500'>Account</p>
+                        <div className='relative group cursor-pointer'>
+                            <div className='flex gap-2 items-center'>
+                                <i class="ri-user-3-line text-gray-400 group-hover:text-blue-500"></i> <p className='text-gray-400 group-hover:text-blue-500'>Account</p>
+                            </div>
+                            <div className='absolute top-full -right-14 bg-sky-50 shadow-lg rounded-md p-4 w-48 z-50 text-center opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity duration-200'>
+                                {currentUser?.isAdmin && (<NavLink to='/create-product' className='hover:text-blue-500'>Create Product</NavLink>)}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -48,16 +53,20 @@ const Nav = () => {
                         </NavLink>
                         {currentUser ?
                             <>
-                                <span className='bg-gray-200 py-1 px-2 rounded flex items-center gap-2'>
-                                    <i className="ri-user-3-line text-xl text-blue-500"></i>
-                                    {currentUser.name}
-                                </span>
-                                <button
-                                    onClick={() => dispatch(asyncLogoutUser())}
-                                    className="bg-red-500 text-white text-sm py-1 px-2 rounded hover:bg-red-600 transition"
-                                >
-                                    Logout
-                                </button>
+                                <div className='relative cursor-pointer group'>
+                                    <span className='bg-gray-200 py-1 px-2 rounded flex items-center gap-2'>
+                                        <i className="ri-user-3-line text-xl text-blue-500"></i>
+                                        {currentUser.name}
+                                    </span>
+                                    <div className='absolute top-full -right-14 bg-sky-50 shadow-lg rounded-md p-4 w-48 z-50 text-center opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity duration-200'>
+                                        <button
+                                            onClick={() => dispatch(asyncLogoutUser())}
+                                            className="bg-red-500 text-white text-sm py-1 px-2 rounded hover:bg-red-600 transition"
+                                        >
+                                            Logout
+                                        </button>
+                                    </div>
+                                </div>
                             </> :
                             (<NavLink to='/login' className='bg-gray-200 py-1 px-2 rounded'><span><i class="ri-user-3-line text-xl text-blue-500"></i>Login/SignUp</span></NavLink>)}
                     </div>

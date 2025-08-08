@@ -1,6 +1,10 @@
 import axios from "axios"
 import { loginuser, logoutuser } from "../reducers/UserSlice";
-import { account } from "../../lib/appwrite";
+import { account, databases } from "../../lib/appwrite";
+import { Query } from "appwrite";
+
+const DB_ID = "6894936d0026edd36555";
+const COLLECTION_ID = "689495a2000eefa9b1ea";
 
 export const asyncLoginUser = (email, password) => async (dispatch, getState) =>{
     try{
@@ -11,8 +15,20 @@ export const asyncLoginUser = (email, password) => async (dispatch, getState) =>
 
         const user = await account.get();
 
-        dispatch(loginuser(user));
-        localStorage.setItem("currentUser", JSON.stringify(user))
+        const response = await databases.listDocuments(DB_ID, COLLECTION_ID, [
+            Query.equal("userId", user.$id)
+        ])
+
+        const userDoc = response.documents[0];
+
+        const fulluser = {
+            ...user,
+            ...userDoc
+        }
+
+        dispatch(loginuser(fulluser));
+        localStorage.setItem("currentUser", JSON.stringify(fulluser))
+
     }catch(error){
         console.log("login failed :", error);
         

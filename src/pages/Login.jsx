@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
@@ -14,6 +14,13 @@ const Login = () => {
     const LoginHandler = (user) => {
         dispatch(asyncLoginUser(user.email, user.password));
         reset();
+        navigate('/')
+    }
+
+    const [showPassword, setshowPassword] = useState(false);
+
+    const togglepasswordvisibility = () =>{
+        setshowPassword(!showPassword)
     }
     return (
         <>
@@ -44,7 +51,10 @@ const Login = () => {
                                 </div>
                                 <div>
                                     <label className='text-gray-700 font-semibold'>Password</label>
-                                    <input type="password" placeholder='Enter your password' {...register("password", { required: "Password is required" })} className='w-full px-4 py-2 rounded-4xl border-2 border-gray-300 focus:outline-none focus:border-blue-500 mt-2' />
+                                    <div className='relative'>
+                                        <input type={showPassword ? "text" : "password"} placeholder='Enter your password' {...register("password", { required: "Password is required" })} className='w-full px-4 py-2 rounded-4xl border-2 border-gray-300 focus:outline-none focus:border-blue-500 mt-2' />
+                                        <button type='button' onClick={togglepasswordvisibility} className='absolute top-4 right-4 text-lg'> {showPassword ? <i className="ri-eye-line"></i> : <i className="ri-eye-close-line"></i>} </button>
+                                    </div>
                                     {errors.password && <p className='text-red-500 text-sm'>{errors.password.message}</p>}
                                 </div>
                                 <div className='flex justify-between items-center'>
