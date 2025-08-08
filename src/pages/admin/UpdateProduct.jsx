@@ -2,6 +2,7 @@ import React from 'react'
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { asyncupdateproduct } from '../../store/actions/ProductAction';
 
 const UpdateProduct = () => {
     const dispatch = useDispatch()
@@ -22,7 +23,9 @@ const UpdateProduct = () => {
         }
     )
 
-    const updateproducthandler = (product) => {}
+    const updateproducthandler = (updatedProduct) => {
+        dispatch(asyncupdateproduct(id, updatedProduct))
+    }
     const deleteproducthandler = () => {}
 
     return product ? (
