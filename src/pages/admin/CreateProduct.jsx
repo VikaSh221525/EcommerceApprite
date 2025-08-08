@@ -26,7 +26,6 @@ const CreateProduct = () => {
 
         }catch (err){
             console.log("ProductCreateError:", err);
-            
         }
     }
     return (
