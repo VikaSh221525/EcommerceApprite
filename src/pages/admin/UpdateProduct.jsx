@@ -1,14 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { asyncupdateproduct } from '../../store/actions/ProductAction';
+import { useNavigate, useParams } from 'react-router-dom';
+import { asyncdeleteproduct, asyncloadproducts, asyncupdateproduct } from '../../store/actions/ProductAction';
 
 const UpdateProduct = () => {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const { id } = useParams()
     const products = useSelector((state) => state.product.products)
     const product = products.find(p => p.$id === id);
+
+    useEffect(() => {
+        if (products.length === 0) {
+            dispatch(asyncloadproducts());
+        }
+    }, [dispatch, products]);
 
     const { register, reset, handleSubmit, formState: { errors } } = useForm(
         {
@@ -24,9 +31,24 @@ const UpdateProduct = () => {
     )
 
     const updateproducthandler = (updatedProduct) => {
-        dispatch(asyncupdateproduct(id, updatedProduct))
+        if (!product) {
+            console.warn('Cannot update: Product no longer exists.');
+            return;
+        }
+        updatedProduct.price = parseInt(updatedProduct.price);
+        dispatch(asyncupdateproduct(id, updatedProduct));
+        console.log('product updated successfully');
+
     }
-    const deleteproducthandler = () => {}
+    const deleteproducthandler = async () => {
+        if (window.confirm("Are you sure you want to delete this product?")) {
+            await dispatch(asyncdeleteproduct(product.$id));
+            reset();
+            navigate('/');
+        }
+        console.log('product deleted successfully');
+
+    }
 
     return product ? (
         <>

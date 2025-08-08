@@ -18,7 +18,7 @@ const CreateProduct = () => {
                     description: product.description,
                     price: Number(product.price),
                     category: product.category,
-                    discount: product.discount || 0
+                    discount: Number(product.discount || 0)
                 }
             ) 
             console.log(newProduct);
