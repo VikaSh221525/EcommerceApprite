@@ -6,6 +6,7 @@ import Footer from './components/Footer';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginuser } from './store/reducers/UserSlice';
 import { asyncGetWishlist } from './store/actions/WishlistAction';
+import { asyncgetcart } from './store/actions/CartAction';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ const App = () => {
   useEffect(() => {
     if(currentUser){
       dispatch(asyncGetWishlist(currentUser.$id));
+      dispatch(asyncgetcart());
     }
   }, [dispatch, currentUser])
 
