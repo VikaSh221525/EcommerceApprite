@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useParams } from 'react-router-dom'
+import { asyncAddToWishlist, asyncRemoveFromWishlist } from '../store/actions/WishlistAction'
 
 const ProductDetails = () => {
     const { id } = useParams()
@@ -10,10 +11,19 @@ const ProductDetails = () => {
     const currentUser = useSelector((state) => state.user.currentUser)
 
 
-    const [isInWishlist, setisInWishlist] = useState(false)
+    const wishlistItems = useSelector((state) => state.wishlist.wishlistItems);
+    const isInWishlist = wishlistItems.some((item)=> item.$id === product.$id)
 
     const toggleWishlist = () => {
-        setisInWishlist(!isInWishlist);
+        if(!currentUser){
+            alert("Please login to see Wishlist")
+            return
+        }
+        if(isInWishlist){
+            dispatch(asyncRemoveFromWishlist(product.$id, currentUser.$id));
+        }else{
+            dispatch(asyncAddToWishlist(product, currentUser.$id))
+        }
     }
     return (
         <>

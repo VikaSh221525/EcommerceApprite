@@ -9,7 +9,8 @@ const Nav = () => {
     const currentUser = useSelector((state) => state.user.currentUser)
     console.log(currentUser);
 
-    const x = 0
+    const wishlistItems = useSelector((state) => state.wishlist.wishlistItems);
+    let totalfavitems = wishlistItems.length;
     return (
         <>
             {/* top */}
@@ -43,13 +44,13 @@ const Nav = () => {
                         <input type="text" placeholder='Search for products, brands, and more...' className='outline-none w-full text-gray-700 placeholder-gray-400' />
                     </div>
                     <div className='flex gap-5 items-center'>
-                        <div className='relative'>
+                        <NavLink to='/wishlist' className='relative'>
                             <i class="ri-heart-line text-2xl"></i>
-                            <span className='bg-blue-500 absolute -top-2 -right-1 rounded-full px-1.5 text-sm text-white'>0</span>
-                        </div>
+                            <span className='bg-blue-500 absolute -top-2 -right-1 rounded-full px-1.5 text-sm text-white'> {totalfavitems} </span>
+                        </NavLink>
                         <NavLink to='/cart' className='relative'>
                             <i class="ri-shopping-cart-2-fill text-2xl"></i>
-                            <span className='bg-blue-500 absolute -top-2 -right-1 rounded-full px-1.5 text-sm text-white'> {x} </span>
+                            <span className='bg-blue-500 absolute -top-2 -right-1 rounded-full px-1.5 text-sm text-white'> 0</span>
                         </NavLink>
                         {currentUser ?
                             <>

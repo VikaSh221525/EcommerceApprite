@@ -7,6 +7,7 @@ import CreateProduct from '../pages/admin/CreateProduct'
 import Product from '../pages/Product'
 import ProductDetails from '../pages/ProductDetails'
 import UpdateProduct from '../pages/admin/UpdateProduct'
+import Wishlist from '../pages/Wishlist'
 
 const Mainroutes = () => {
     return (
@@ -18,6 +19,7 @@ const Mainroutes = () => {
             <Route path='products' element={<Product/>} />
             <Route path='product/:id' element={<ProductDetails/>} />
             <Route path='update-product/:id' element={<UpdateProduct/>} />
+            <Route path='wishlist' element={<Wishlist/>} />
         </Routes>
     )
 }
