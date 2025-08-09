@@ -1,7 +1,27 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { asyncgetcart, asyncUpdateQuantity } from '../store/actions/CartAction';
 
 const Cart = () => {
-    cartItems = [];
+    const dispatch = useDispatch()
+    const cartItems = useSelector((state) => state.cart.cartItems);
+    console.log(cartItems);
+    
+
+    useEffect(() => {
+        dispatch(asyncgetcart());
+    }, [dispatch])
+
+    const handleIncrease = (item) => {
+        dispatch(asyncUpdateQuantity(item.$id, item.quantity + 1));
+    }
+
+    const handleDecrease = (item) => {
+        if(item.quantity > 1){
+            dispatch(asyncUpdateQuantity(item.$id, item.quantity - 1))
+        }
+    }
+
 
 
     return (
@@ -16,25 +36,29 @@ const Cart = () => {
                         <h2 className='text-lg font-semibold w-[20%] text-center'>Quantity</h2>
                         <h2 className='text-lg font-semibold w-[20%] text-center'>Total</h2>
                     </div>
-                    {cartItems.map(item => (
-                        <div key={item.id} className='flex items-center justify-between border-b py-6 px-4'>
-                            <div className='flex items-center w-[40%]'>
-                                <img src='' alt='image' className='w-24 h-24 object-cover rounded mr-4' />
-                                <span className='font-semibold'>title</span>
+                    {cartItems.length === 0 ? (
+                        <p className="mt-6 text-lg text-gray-500">Your cart is empty.</p>
+                    ) : (
+                        cartItems.map(item => (
+                            <div key={item.id} className='flex flex-col md:flex-row items-center justify-between border-b py-6 px-4'>
+                                <div className='flex items-center flex-1 md:w-[40%] w-full mb-2 md:mb-0'>
+                                    <img src={item.image} alt='image' className='w-24 h-24 object-cover rounded mr-4' />
+                                    <span className='font-semibold'>{item.title}</span>
+                                </div>
+                                <div className='md:w-[20%] w-full text-center font-medium mb-2 md:mb-0'>
+                                    ₹{item.price}
+                                </div>
+                                <div className='md:w-[20%] w-full text-center flex items-center justify-center gap-2 mb-2 md:mb-0'>
+                                    <button onClick={() => handleDecrease(item)} className='px-2 py-1 border rounded'>-</button>
+                                    <span>{item.quantity}</span>
+                                    <button onClick={() => handleIncrease(item)} className='px-2 py-1 border rounded'>+</button>
+                                </div>
+                                <div className='md:w-[20%] w-full text-center font-medium'>
+                                    ₹{item.price * item.quantity}
+                                </div>
                             </div>
-                            <div className='w-[20%] text-center font-medium'>
-                                price
-                            </div>
-                            <div className='w-[20%] text-center flex items-center justify-center gap-2'>
-                                <button className='px-2 py-1 border rounded'>-</button>
-                                <span>quantity</span>
-                                <button className='px-2 py-1 border rounded'>+</button>
-                            </div>
-                            <div className='w-[20%] text-center font-medium'>
-                                totalPrice
-                            </div>
-                        </div>
-                    ))}
+                        ))
+                    )}
                 </div>
             </div>
         </>

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useParams } from 'react-router-dom'
 import { asyncAddToWishlist, asyncRemoveFromWishlist } from '../store/actions/WishlistAction'
-import { asyncaddtocart } from '../store/actions/CartAction'
+import { asyncaddtocart, asyncUpdateQuantity } from '../store/actions/CartAction'
 
 const ProductDetails = () => {
     const { id } = useParams()
@@ -13,30 +13,32 @@ const ProductDetails = () => {
 
 
     const wishlistItems = useSelector((state) => state.wishlist.wishlistItems);
-    const isInWishlist = wishlistItems.some((item)=> item.$id === product?.$id)
+    const isInWishlist = wishlistItems.some((item) => item.$id === product?.$id)
 
     const toggleWishlist = () => {
-        if(!currentUser){
+        if (!currentUser) {
             alert("Please login to see Wishlist")
             return
         }
-        if(isInWishlist){
+        if (isInWishlist) {
             dispatch(asyncRemoveFromWishlist(product.$id, currentUser.$id));
-        }else{
+        } else {
             dispatch(asyncAddToWishlist(product, currentUser.$id))
         }
     }
 
     const cartItems = useSelector((state) => state.cart.cartItems);
-    const existingCartItem = cartItems.find(item => item.productId === product?.id);
+    const existingCartItem = cartItems.find(item => item.productId === product?.$id);
     const isInCart = !!existingCartItem;
 
     const handleAddToCart = (product) => {
-        if(!currentUser){
+        console.log('addto cart clicked');
+
+        if (!currentUser) {
             alert("please login to add items to you cart");
             return;
         }
-        dispatch(asyncaddtocart(product))
+        dispatch(asyncaddtocart(product));
     }
     return (
         <>
@@ -52,8 +54,8 @@ const ProductDetails = () => {
                         <span className='text-2xl font-bold text-green-600'>Rs. {product?.price}</span>
                         {product?.discount > 0 && <span className='text-red-500 text-lg'>Discount: {product?.discount}%</span>}
                         <div className='flex items-center gap-3'>
-                            <button type='button' onClick={() => handleAddToCart(product)} className='py-3 px-8 bg-white text-black hover:bg-black hover:text-white transition-colors duration-200 w-fit rounded-4xl cursor-pointer outline'>
-                                {isInCart ? `In Cart (${existingCartItem.quantity})`:"Add to Cart"}
+                            <button onClick={() => handleAddToCart(product)} className='py-3 px-8 bg-white text-black hover:bg-black hover:text-white transition-colors duration-200 w-fit rounded-4xl cursor-pointer outline'>
+                                {isInCart ? `In Cart (${existingCartItem.quantity})` : "Add to Cart"}
                             </button>
                             <button className='py-3 px-8 bg-gray-200 text-black w-fit rounded-4xl cursor-pointer flex gap-2' onClick={toggleWishlist}>
                                 {isInWishlist ? (

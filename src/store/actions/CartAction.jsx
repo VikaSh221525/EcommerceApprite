@@ -10,15 +10,31 @@ const CART_COLLECTION_ID = '68949fed0004e146bfcd'
 
 export const asyncgetcart = () => async (dispatch, getState) => {
     try {
-        const userId = getState().user.userData?.$id;
+        const userId = getState().user.currentUser?.$id;
         if (!userId) return;
+
+        const allProducts = getState().product.products;
+        if(!allProducts || allProducts.length === 0){
+            console.log("Product list is not loaded yet.");
+            return;
+        }
 
         const res = await databases.listDocuments(
             DB_ID,
             CART_COLLECTION_ID,
             [Query.equal("userId", userId)]
         )
-        dispatch(loadcart(res.documents));
+
+        const combinedCartItems = res.documents.map(cartItem => {
+            const productDetails = allProducts.find(p => p.$id === cartItem.productId);
+
+            return {
+                ...productDetails,
+                ...cartItem
+            }
+        }).filter(item => item.title);
+
+        dispatch(loadcart(combinedCartItems));
     } catch (err) {
         console.log("GetCart error: ", err);
 
@@ -26,6 +42,8 @@ export const asyncgetcart = () => async (dispatch, getState) => {
 }
 
 export const asyncaddtocart = (product) => async (dispatch, getState) => {
+    console.log(product);
+    
     try {
         const userId = getState().user.currentUser?.$id;
         if (!userId) return;

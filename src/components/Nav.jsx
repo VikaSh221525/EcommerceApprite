@@ -11,6 +11,9 @@ const Nav = () => {
 
     const wishlistItems = useSelector((state) => state.wishlist.wishlistItems);
     let totalfavitems = wishlistItems.length;
+
+    const cartItems = useSelector((state) => state.cart.cartItems)
+    let TotalCartQuantity = cartItems.reduce((accumulator, item)=> accumulator+item.quantity, 0)
     return (
         <>
             {/* top */}
@@ -50,7 +53,7 @@ const Nav = () => {
                         </NavLink>
                         <NavLink to='/cart' className='relative'>
                             <i class="ri-shopping-cart-2-fill text-2xl"></i>
-                            <span className='bg-blue-500 absolute -top-2 -right-1 rounded-full px-1.5 text-sm text-white'> 0</span>
+                            <span className='bg-blue-500 absolute -top-2 -right-1 rounded-full px-1.5 text-sm text-white'> {TotalCartQuantity} </span>
                         </NavLink>
                         {currentUser ?
                             <>
