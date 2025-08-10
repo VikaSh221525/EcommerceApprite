@@ -12,6 +12,7 @@ import Cart from '../pages/Cart'
 import CategoryPage from '../components/CategoryPage'
 import Deals from '../components/Deals'
 import PageNotFound from '../pages/PageNotFound'
+import AuthWrapper from './AuthWrapper'
 
 const Mainroutes = () => {
     return (
@@ -19,10 +20,10 @@ const Mainroutes = () => {
             <Route path="/" element={<Home />} />
             <Route path="register" element={<Register/>} />
             <Route path='login' element={<Login/>} />
-            <Route path='create-product' element={<CreateProduct/>} />
+            <Route path='create-product' element={<AuthWrapper> <CreateProduct/> </AuthWrapper>} />
             <Route path='products' element={<Product/>} />
             <Route path='product/:id' element={<ProductDetails/>} />
-            <Route path='update-product/:id' element={<UpdateProduct/>} />
+            <Route path='update-product/:id' element={ <AuthWrapper> <UpdateProduct/> </AuthWrapper>} />
             <Route path='wishlist' element={<Wishlist/>} />
             <Route path='cart' element={<Cart/>} />
             <Route path='category/:categoryName' element={<CategoryPage/>} />
