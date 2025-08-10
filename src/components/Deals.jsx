@@ -8,7 +8,7 @@ const Deals = () => {
     const { products } = useSelector((state) => state.product);
 
     useEffect(() => {
-        if (products.length> 0) {
+        if (products.length === 0) {
             dispatch(asyncloadproducts());
         }
     }, [dispatch, products.length]);
