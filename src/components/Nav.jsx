@@ -3,17 +3,52 @@ import { motion } from "motion/react"
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import { asyncLogoutUser } from '../store/actions/UserAction'
+import { useEffect, useRef, useState } from 'react'
+import { li } from 'motion/react-client'
 
 const Nav = () => {
     const dispatch = useDispatch();
     const currentUser = useSelector((state) => state.user.currentUser)
-    console.log(currentUser);
+    const { products } = useSelector((state) => state.product);
+
+    const [searchQuery, setsearchQuery] = useState("");
+    const [searchResults, setsearchResults] = useState([]);
+    const searchContainerRef = useRef();
+
+    useEffect(() => {
+        if (searchQuery.trim() !== '') {
+            const filtered = products.filter(
+                (product) => product.title.toLowerCase().includes(searchQuery.toLowerCase())
+            ).slice(0, 5);
+            setsearchResults(filtered);
+        } else {
+            setsearchResults([])
+        }
+    }, [searchQuery, products]);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (searchContainerRef.current && !searchContainerRef.current.contains(event.target)) {
+                setsearchQuery("");
+                setsearchResults([]);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside)
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside)
+        }
+    }, [])
+
+    const handleResultClick = () => {
+        setsearchQuery("");
+        setsearchResults([]);
+    }
 
     const wishlistItems = useSelector((state) => state.wishlist.wishlistItems);
     let totalfavitems = wishlistItems.length;
 
     const cartItems = useSelector((state) => state.cart.cartItems)
-    let TotalCartQuantity = cartItems.reduce((accumulator, item)=> accumulator+item.quantity, 0)
+    let TotalCartQuantity = cartItems.reduce((accumulator, item) => accumulator + item.quantity, 0)
     return (
         <>
             {/* top */}
@@ -42,10 +77,37 @@ const Nav = () => {
             <div className='px-20 py-4 bg-white border-b border-gray-200'>
                 <div className='flex justify-between items-center'>
                     <NavLink to='/' className='flex gap-2 items-center'><p className='font-bold text-4xl text-blue-600'>TechPulse</p></NavLink>
-                    <div className='flex items-center rounded-full px-4 py-2 w-[500px] border border-gray-200 focus-within:border-blue-600'>
-                        <Search className='text-gray-400 w-5 h-5 mr-2' />
-                        <input type="text" placeholder='Search for products, brands, and more...' className='outline-none w-full text-gray-700 placeholder-gray-400' />
+
+                    {/* search bar */}
+                    <div className='relative w-[500px] ' ref={searchContainerRef}>
+                        <div className='flex items-center rounded-full px-4 py-2 border border-gray-200 focus-within:border-blue-600'>
+                            <Search className='text-gray-400 w-5 h-5 mr-2' />
+                            <input type="text"
+                                placeholder='Search for products, brands, and more...'
+                                className='outline-none w-full text-gray-700 placeholder-gray-400'
+                                value={searchQuery}
+                                onChange={(e) => setsearchQuery(e.target.value)}
+                            />
+                        </div>
+                        <div className='absolute top-full bg-white mt-2 w-full rounded-lg shadow-sm z-50 max-h-80 overflow-y-auto '>
+                            <ul>
+                                {searchResults.map((product) => (
+                                    <li key={product.$id}>
+                                        <NavLink
+                                            to={`/product/${product.$id}`}
+                                            className='flex items-center p-3 hover:bg-gray-100 transition-colors duration-150'
+                                            onClick={handleResultClick}
+                                        >
+                                            <img src={product.image} alt="image" className='w-12 h-12 object-contain mr-4' />
+                                            <span className='font-medium text-gray-700'>{product.title} </span>
+                                        </NavLink>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
                     </div>
+
+
                     <div className='flex gap-5 items-center'>
                         <NavLink to='/wishlist' className='relative'>
                             <i class="ri-heart-line text-2xl"></i>
@@ -108,7 +170,7 @@ const Nav = () => {
                     <motion.span whileHover={{ y: -1, scale: 1.05 }} whileTap={{ y: 0, scale: 1 }}>
                         <NavLink to='/category/Gaming' className='hover:text-blue-500'>Gaming</NavLink>
                     </motion.span>
-                    <motion.span animate={{x: [0, 4, 0] }} transition={{repeat: Infinity, ease: 'backInOut', duration: 1}} >
+                    <motion.span animate={{ x: [0, 4, 0] }} transition={{ repeat: Infinity, ease: 'backInOut', duration: 1 }} >
                         <NavLink to='/deals' className='text-blue-500 font-semibold animate-bounce'><i class="ri-price-tag-3-fill"></i> Deals </NavLink>
                     </motion.span>
                 </div>
