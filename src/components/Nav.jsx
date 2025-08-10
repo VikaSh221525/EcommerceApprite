@@ -1,4 +1,4 @@
-import { Search, ChartColumnStacked } from 'lucide-react'
+import { Search, ChartColumnStacked, Repeat } from 'lucide-react'
 import { motion } from "motion/react"
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
@@ -85,31 +85,31 @@ const Nav = () => {
                         </NavLink>
                     </motion.span>
                     <motion.span whileHover={{ y: -1, scale: 1.05 }} whileTap={{ y: 0, scale: 1 }}>
-                        <NavLink className='hover:text-blue-500'>SmartPhones</NavLink>
+                        <NavLink to='/category/Smartphones' className='hover:text-blue-500'>SmartPhones</NavLink>
                     </motion.span>
                     <motion.span whileHover={{ y: -1, scale: 1.05 }} whileTap={{ y: 0, scale: 1 }}>
-                        <NavLink className='hover:text-blue-500'>Laptops</NavLink>
+                        <NavLink to='/category/Laptops' className='hover:text-blue-500'>Laptops</NavLink>
                     </motion.span>
                     <motion.span whileHover={{ y: -1, scale: 1.05 }} whileTap={{ y: 0, scale: 1 }}>
-                        <NavLink className='hover:text-blue-500'>Tablets</NavLink>
+                        <NavLink to='/category/Tablets' className='hover:text-blue-500'>Tablets</NavLink>
                     </motion.span>
                     <motion.span whileHover={{ y: -1, scale: 1.05 }} whileTap={{ y: 0, scale: 1 }}>
-                        <NavLink className='hover:text-blue-500'>Audio</NavLink>
+                        <NavLink to='/category/Audio' className='hover:text-blue-500'>Audio</NavLink>
                     </motion.span>
                     <motion.span whileHover={{ y: -1, scale: 1.05 }} whileTap={{ y: 0, scale: 1 }}>
-                        <NavLink className='hover:text-blue-500'>Weareables</NavLink>
+                        <NavLink to='/category/Wearables' className='hover:text-blue-500'>Weareables</NavLink>
                     </motion.span>
                     <motion.span whileHover={{ y: -1, scale: 1.05 }} whileTap={{ y: 0, scale: 1 }}>
-                        <NavLink className='hover:text-blue-500'>Accessories</NavLink>
+                        <NavLink to='/category/Accessories' className='hover:text-blue-500'>Accessories</NavLink>
                     </motion.span>
                     <motion.span whileHover={{ y: -1, scale: 1.05 }} whileTap={{ y: 0, scale: 1 }}>
-                        <NavLink className='hover:text-blue-500'>Smart Home</NavLink>
+                        <NavLink to='/category/SmartHome' className='hover:text-blue-500'>Smart Home</NavLink>
                     </motion.span>
                     <motion.span whileHover={{ y: -1, scale: 1.05 }} whileTap={{ y: 0, scale: 1 }}>
-                        <NavLink className='hover:text-blue-500'>Gaming</NavLink>
+                        <NavLink to='/category/Gaming' className='hover:text-blue-500'>Gaming</NavLink>
                     </motion.span>
-                    <motion.span whileHover={{ y: -1, scale: 1.05 }} whileTap={{ y: 0, scale: 1 }}>
-                        <NavLink className='text-blue-500'><i class="ri-price-tag-3-fill"></i> Deals </NavLink>
+                    <motion.span animate={{x: [0, 4, 0] }} transition={{repeat: Infinity, ease: 'backInOut', duration: 1}} >
+                        <NavLink to='/deals' className='text-blue-500 font-semibold animate-bounce'><i class="ri-price-tag-3-fill"></i> Deals </NavLink>
                     </motion.span>
                 </div>
             </div>

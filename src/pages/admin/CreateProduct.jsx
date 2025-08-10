@@ -2,6 +2,7 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import { databases } from '../../lib/appwrite'
 import { ID } from 'appwrite'
+import { toast } from 'react-toastify'
 
 const CreateProduct = () => {
     const { register, reset, handleSubmit, formState: { errors } } = useForm()
@@ -22,7 +23,8 @@ const CreateProduct = () => {
                 }
             ) 
             console.log(newProduct);
-            reset()
+            toast.success("Product Created Successfully!")
+            reset();
 
         }catch (err){
             console.log("ProductCreateError:", err);
@@ -69,6 +71,7 @@ const CreateProduct = () => {
                                 <option value="Wearable">Wearables</option>
                                 <option value="Accessories">Accessories</option>
                                 <option value="Gaming">Gaming</option>
+                                <option value="SmartHome">SmartHome</option>
                             </select>
                         </div>
                         <div>
