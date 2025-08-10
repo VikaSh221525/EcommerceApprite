@@ -11,6 +11,7 @@ import Wishlist from '../pages/Wishlist'
 import Cart from '../pages/Cart'
 import CategoryPage from '../components/CategoryPage'
 import Deals from '../components/Deals'
+import PageNotFound from '../pages/PageNotFound'
 
 const Mainroutes = () => {
     return (
@@ -26,6 +27,7 @@ const Mainroutes = () => {
             <Route path='cart' element={<Cart/>} />
             <Route path='category/:categoryName' element={<CategoryPage/>} />
             <Route path='deals' element={<Deals/>} />
+            <Route path='*' element={<PageNotFound/>} />
         </Routes>
     )
 }
