@@ -1,38 +1,42 @@
-import React from 'react'
+import React, { lazy, Suspense } from 'react'
 import { Route, Routes } from 'react-router-dom'
-import Register from '../pages/Register'
-import Home from '../pages/Home'
-import Login from '../pages/Login'
-import CreateProduct from '../pages/admin/CreateProduct'
-import Product from '../pages/Product'
-import ProductDetails from '../pages/ProductDetails'
-import UpdateProduct from '../pages/admin/UpdateProduct'
-import Wishlist from '../pages/Wishlist'
-import Cart from '../pages/Cart'
-import CategoryPage from '../components/CategoryPage'
-import Deals from '../components/Deals'
-import PageNotFound from '../pages/PageNotFound'
 import AuthWrapper from './AuthWrapper'
 import ScrollToTop from '../components/ScrollToTop'
+
+const Register = lazy(() => import('../pages/Register'))
+const Home = lazy(() => import('../pages/Home'))
+const Login = lazy(() => import('../pages/Login'))
+const CreateProduct = lazy(() => import('../pages/admin/CreateProduct'))
+const Product = lazy(() => import('../pages/Product'))
+const ProductDetails = lazy(() => import('../pages/ProductDetails'))
+const UpdateProduct = lazy(() => import('../pages/admin/UpdateProduct'))
+const Wishlist = lazy(() => import('../pages/Wishlist'))
+const Cart = lazy(() => import('../pages/Cart'))
+const CategoryPage = lazy(() => import('../components/CategoryPage'))
+const Deals = lazy(() => import('../components/Deals'))
+const PageNotFound = lazy(() => import('../pages/PageNotFound'))
+
 
 const Mainroutes = () => {
     return (
         <>
-            <ScrollToTop/>
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="register" element={<Register />} />
-                <Route path='login' element={<Login />} />
-                <Route path='create-product' element={<AuthWrapper> <CreateProduct /> </AuthWrapper>} />
-                <Route path='products' element={<Product />} />
-                <Route path='product/:id' element={<ProductDetails />} />
-                <Route path='update-product/:id' element={<AuthWrapper> <UpdateProduct /> </AuthWrapper>} />
-                <Route path='wishlist' element={<Wishlist />} />
-                <Route path='cart' element={<Cart />} />
-                <Route path='category/:categoryName' element={<CategoryPage />} />
-                <Route path='deals' element={<Deals />} />
-                <Route path='*' element={<PageNotFound />} />
-            </Routes>
+            <ScrollToTop />
+            <Suspense>
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="register" element={<Register />} />
+                    <Route path='login' element={<Login />} />
+                    <Route path='create-product' element={<AuthWrapper> <CreateProduct /> </AuthWrapper>} />
+                    <Route path='products' element={<Product />} />
+                    <Route path='product/:id' element={<ProductDetails />} />
+                    <Route path='update-product/:id' element={<AuthWrapper> <UpdateProduct /> </AuthWrapper>} />
+                    <Route path='wishlist' element={<Wishlist />} />
+                    <Route path='cart' element={<Cart />} />
+                    <Route path='category/:categoryName' element={<CategoryPage />} />
+                    <Route path='deals' element={<Deals />} />
+                    <Route path='*' element={<PageNotFound />} />
+                </Routes>
+            </Suspense>
         </>
     )
 }
