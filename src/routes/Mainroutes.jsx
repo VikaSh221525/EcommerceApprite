@@ -21,7 +21,7 @@ const Mainroutes = () => {
     return (
         <>
             <ScrollToTop />
-            <Suspense>
+            <Suspense fallback={ <h1 className='text-2xl text-gray-700 mt-5 ml-7'>Loading...</h1> } >
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="register" element={<Register />} />

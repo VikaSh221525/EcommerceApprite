@@ -130,7 +130,7 @@ const Home = () => {
             </div>
 
             {/* what we offer */}
-            <div className='w-full flex justify-between items-center py-10 px-20'>
+            <div className='w-full flex justify-between items-center py-30 px-20'>
                 <div className='flex flex-col items-center justify-center gap-3 text-center'>
                     <img srcset="" sizes="(min-width: 990px) 100vw, 100vw" src="//elexy-demo.myshopify.com/cdn/shop/files/text-icon-1.svg?v=1720505997&amp;width=375" alt="" loading="lazy" width="78" height="64" />
                     <h1 className='text-lg font-semibold'>Free Shipping</h1>

@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useParams } from 'react-router-dom'
 import { asyncAddToWishlist, asyncRemoveFromWishlist } from '../store/actions/WishlistAction'
 import { asyncaddtocart, asyncUpdateQuantity } from '../store/actions/CartAction'
+import RecommendedProducts from '../components/RecommendedProducts'
+import { random } from 'nanoid'
 
 const ProductDetails = () => {
     const { id } = useParams()
@@ -11,6 +13,26 @@ const ProductDetails = () => {
     const product = products.find(p => p.$id === id);
     const currentUser = useSelector((state) => state.user.currentUser)
 
+    // RecommendedProduct Logic
+    const recommendedProducts = useMemo(() => {
+        if (!product || products.length === 0) return [];
+
+        const shuffleArray = (array) => {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex !== 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array
+        }
+
+        const filtered = products.filter(
+            (p) => p.$id !== product.$id
+        );
+        const shuffled = shuffleArray(filtered);
+        return shuffled.slice(0,4);
+    }, [id, products, product])
 
     const wishlistItems = useSelector((state) => state.wishlist.wishlistItems);
     const isInWishlist = wishlistItems.some((item) => item.$id === product?.$id)
@@ -73,6 +95,10 @@ const ProductDetails = () => {
                 </div>
 
             </div>
+
+            {recommendedProducts.length > 0 && (
+                <RecommendedProducts products={recommendedProducts} />
+            )}
         </>
     )
 }
