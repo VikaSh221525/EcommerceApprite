@@ -49,7 +49,6 @@ const cartSlice = createSlice({
             state.cartItems = [];
             saveToLocalStorage([])
         }
-
     }
 })
 

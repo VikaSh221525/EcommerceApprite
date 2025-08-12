@@ -40,14 +40,13 @@ const UpdateProduct = () => {
         console.log('product updated successfully');
 
     }
-    const deleteproducthandler = async () => {
+    const deleteproducthandler = () => {
         if (window.confirm("Are you sure you want to delete this product?")) {
-            await dispatch(asyncdeleteproduct(product.$id));
+            dispatch(asyncdeleteproduct(product.$id));
             reset();
             navigate('/');
         }
         console.log('product deleted successfully');
-
     }
 
     return product ? (

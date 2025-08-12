@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { asyncgetcart, asyncUpdateQuantity } from '../store/actions/CartAction';
+import { asyncgetcart, asyncremovefromcart, asyncUpdateQuantity } from '../store/actions/CartAction';
 
 const Cart = () => {
     const dispatch = useDispatch()
@@ -22,6 +22,12 @@ const Cart = () => {
         }
     }
 
+    const removeCartItem = (cartid) => {
+        if(window.confirm("Want to remove the item from cart?")){
+            dispatch(asyncremovefromcart(cartid));
+        }
+    }
+
 
 
     return (
@@ -40,8 +46,8 @@ const Cart = () => {
                         <p className="mt-6 text-lg text-gray-500">Your cart is empty.</p>
                     ) : (
                         cartItems.map(item => (
-                            <div key={item.id} className='flex flex-col md:flex-row items-center justify-between border-b border-b-gray-200 py-6 px-4'>
-                                <button className='bg-black px-2 py-1 rounded-full mr-4'><i className="ri-close-large-line text-white" ></i></button>
+                            <div key={item.$id} className='flex flex-col md:flex-row items-center justify-between border-b border-b-gray-200 py-6 px-4'>
+                                <button onClick={() => removeCartItem(item.$id)} className='bg-black/80 hover:bg-black px-2 py-1 rounded-full mr-4 cursor-pointer'><i className="ri-close-large-line text-white" ></i></button>
                                 <div className='flex items-center flex-1 md:w-[40%] w-full mb-2 md:mb-0'>
                                     <img src={item.image} alt='image' className='w-24 h-24 object-cover rounded mr-4' />
                                     <span className='font-semibold'>{item.title}</span>
