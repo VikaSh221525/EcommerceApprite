@@ -17,6 +17,11 @@ export const asyncLoginUser = (email, password) => async (dispatch, getState) =>
 
         const user = await account.get();
 
+        if(!user.emailVerification){
+            await(account.deleteSession('current'));
+            throw new Error('Please verify your email before logging in. Check your inbox for a verification link.')
+        }
+
         const response = await databases.listDocuments(DB_ID, COLLECTION_ID, [
             Query.equal("userId", user.$id)
         ])
@@ -33,7 +38,7 @@ export const asyncLoginUser = (email, password) => async (dispatch, getState) =>
 
     }catch(error){
         console.log("login failed :", error);
-        
+        alert(`login failed: ${error.message}`)
     }
 }
 

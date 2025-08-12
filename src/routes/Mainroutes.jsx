@@ -3,7 +3,10 @@ import { Route, Routes } from 'react-router-dom'
 import AuthWrapper from './AuthWrapper'
 import ScrollToTop from '../components/ScrollToTop'
 
+
 const Register = lazy(() => import('../pages/Register'))
+const PendingVerification = lazy(() => import('../pages/PendingVerification'));
+const Verify = lazy(() => import('../pages/Verify'))
 const Home = lazy(() => import('../pages/Home'))
 const Login = lazy(() => import('../pages/Login'))
 const CreateProduct = lazy(() => import('../pages/admin/CreateProduct'))
@@ -35,6 +38,8 @@ const Mainroutes = () => {
                     <Route path='category/:categoryName' element={<CategoryPage />} />
                     <Route path='deals' element={<Deals />} />
                     <Route path='*' element={<PageNotFound />} />
+                    <Route path='verify' element={<Verify/>} />
+                    <Route path='pending-verification' element={<PendingVerification/>} />
                 </Routes>
             </Suspense>
         </>

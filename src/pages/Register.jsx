@@ -13,10 +13,17 @@ const Register = () => {
         try {
             const newUser = await account.create(ID.unique(), user.email, user.password, user.username);
 
-            const adminEmails = ["admin1@gmail.com", "vikash@gmail.com"];
+            await account.createEmailPasswordSession(user.email, user.password);
+            const verificationURL = 'http://localhost:5173/verify';
+            await account.createVerification(verificationURL); 
+
+            await account.deleteSession('current');
+
+
+            const adminEmails = ['vikassharma221525@gmail.com'];
             const isAdmin = adminEmails.includes(user.email);
 
-            const doc = await databases.createDocument(
+            await databases.createDocument(
                 '6894936d0026edd36555',
                 '689495a2000eefa9b1ea',
                 ID.unique(),
@@ -27,12 +34,13 @@ const Register = () => {
                     isAdmin: isAdmin
                 }
             )
-            console.log('created doc:', doc);
 
+            alert("Registeration successfull! Please check your email to verify your account before logging")
             navigate('/login');
 
         } catch (err) {
             console.log("Register error:", err);
+            alert(`Registeration failed!: ${err.message}`)
 
         }
     };
