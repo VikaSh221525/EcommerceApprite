@@ -2,11 +2,10 @@ import { Databases, ID, Query } from "appwrite";
 import { addToCart, loadcart } from "../reducers/CartSlice";
 import client from "../../lib/appwrite";
 
-
 const databases = new Databases(client);
 
-const DB_ID = '6894936d0026edd36555';
-const CART_COLLECTION_ID = '68949fed0004e146bfcd'
+const DB_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID;
+const CART_COLLECTION_ID = import.meta.env.VITE_APPWRITE_CART_COLLECTION_ID
 
 export const asyncgetcart = () => async (dispatch, getState) => {
     try {

@@ -4,14 +4,17 @@ import { databases } from '../../lib/appwrite'
 import { ID } from 'appwrite'
 import { toast } from 'react-toastify'
 
+const DB_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID;
+const PRODUCTS_COLLECTION_ID = import.meta.env.VITE_APPWRITE_PRODUCTS_COLLECTION_ID;
+
 const CreateProduct = () => {
     const { register, reset, handleSubmit, formState: { errors } } = useForm()
 
     const createproducthandler = async (product) => {
         try{
             const newProduct = await databases.createDocument(
-                '6894936d0026edd36555',
-                '6895ecfa002da8cd9fd6',
+                DB_ID,
+                PRODUCTS_COLLECTION_ID,
                 ID.unique(),
                 {
                     image: product.image,

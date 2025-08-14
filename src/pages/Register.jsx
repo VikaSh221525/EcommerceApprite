@@ -5,6 +5,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { account, databases } from '../lib/appwrite';
 import { ID } from 'appwrite';
 
+const DB_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID;
+const USERS_COLLECTION_ID = import.meta.env.VITE_APPWRITE_USERS_COLLECTION_ID;
+
 const Register = () => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const navigate = useNavigate();
@@ -24,8 +27,8 @@ const Register = () => {
             const isAdmin = adminEmails.includes(user.email);
 
             await databases.createDocument(
-                '6894936d0026edd36555',
-                '689495a2000eefa9b1ea',
+                DB_ID,
+                USERS_COLLECTION_ID,
                 ID.unique(),
                 {
                     username: user.username,

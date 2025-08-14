@@ -1,15 +1,18 @@
-import { data } from "react-router-dom";
 import { databases } from "../../lib/appwrite"
 import { loadproduct } from "../reducers/ProductSlice";
 import { Query } from "appwrite";
 import { removeFromWishlist } from "../reducers/WishlistSlice";
 
 
+const DB_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID;
+const PRODUCTS_COLLECTION_ID = import.meta.env.VITE_APPWRITE_PRODUCTS_COLLECTION_ID;
+const WISHLIST_COLLECTION_ID = import.meta.env.VITE_APPWRITE_WISHLIST_COLLECTION_ID
+
 export const asyncloadproducts = ()=> async (dispatch)=>{
     try{
         const response = await databases.listDocuments(
-            '6894936d0026edd36555',
-            '6895ecfa002da8cd9fd6'
+            DB_ID,
+            PRODUCTS_COLLECTION_ID
         )
         console.log('fetched documents :', response.documents);
         dispatch(loadproduct(response.documents))
@@ -23,8 +26,8 @@ export const asyncloadproducts = ()=> async (dispatch)=>{
 export const asyncupdateproduct = (id, data) => async (dispatch, getState) => {
     try{
         await databases.updateDocument(
-            '6894936d0026edd36555',
-            '6895ecfa002da8cd9fd6',
+            DB_ID,
+            PRODUCTS_COLLECTION_ID,
             id,
             data
         )
@@ -40,21 +43,21 @@ export const asyncupdateproduct = (id, data) => async (dispatch, getState) => {
 export const asyncdeleteproduct = (productId) => async (dispatch, getState) =>{
     try{
         await databases.deleteDocument(
-            '6894936d0026edd36555',
-            '6895ecfa002da8cd9fd6',
+            DB_ID,
+            PRODUCTS_COLLECTION_ID,
             productId,
         )
 
         const wishlistEntries = await databases.listDocuments(
-            '6894936d0026edd36555',
-            '689654eb002235267487',
+            DB_ID,
+            WISHLIST_COLLECTION_ID,
             [
                 Query.equal("productId", productId)
             ]
         );
 
         for(const entry of wishlistEntries.documents){
-            await databases.deleteDocument('6894936d0026edd36555', '689654eb002235267487', entry.$id)
+            await databases.deleteDocument(DB_ID, WISHLIST_COLLECTION_ID, entry.$id)
         }
 
         const deletedProduct = getState().product.products.filter(p => p.$id !== productId);

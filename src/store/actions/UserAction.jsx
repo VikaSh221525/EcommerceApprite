@@ -5,8 +5,8 @@ import { Query } from "appwrite";
 import { clearCart } from "../reducers/CartSlice";
 import { clearWishlist } from "../reducers/WishlistSlice";
 
-const DB_ID = "6894936d0026edd36555";
-const COLLECTION_ID = "689495a2000eefa9b1ea";
+const DB_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID;
+const USERS_COLLECTION_ID = import.meta.env.VITE_APPWRITE_USERS_COLLECTION_ID;
 
 export const asyncLoginUser = (email, password) => async (dispatch, getState) =>{
     try{
@@ -22,7 +22,7 @@ export const asyncLoginUser = (email, password) => async (dispatch, getState) =>
             throw new Error('Please verify your email before logging in. Check your inbox for a verification link.')
         }
 
-        const response = await databases.listDocuments(DB_ID, COLLECTION_ID, [
+        const response = await databases.listDocuments(DB_ID, USERS_COLLECTION_ID, [
             Query.equal("userId", user.$id)
         ])
 

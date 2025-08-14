@@ -2,8 +2,8 @@ import { ID, Query } from "appwrite";
 import { databases } from "../../lib/appwrite";
 import { addToWishlist, removeFromWishlist } from "../reducers/WishlistSlice";
 
-const DB_ID = '6894936d0026edd36555'
-const WISHLIST_COLLECTION_ID = '689654eb002235267487';
+const DB_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID;
+const WISHLIST_COLLECTION_ID = import.meta.env.VITE_APPWRITE_WISHLIST_COLLECTION_ID;
 
 export const asyncAddToWishlist = (product, userId) => async (dispatch, getState) =>{
     try{
