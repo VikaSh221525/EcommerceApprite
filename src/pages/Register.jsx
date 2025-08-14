@@ -17,7 +17,7 @@ const Register = () => {
             const newUser = await account.create(ID.unique(), user.email, user.password, user.username);
 
             await account.createEmailPasswordSession(user.email, user.password);
-            const verificationURL = 'http://localhost:5173/verify';
+            const verificationURL = `${import.meta.env.VITE_APP_URL}/verify`;
             await account.createVerification(verificationURL); 
 
             await account.deleteSession('current');
