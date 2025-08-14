@@ -14,7 +14,7 @@ export const asyncloadproducts = ()=> async (dispatch)=>{
             DB_ID,
             PRODUCTS_COLLECTION_ID
         )
-        console.log('fetched documents :', response.documents);
+        // console.log('fetched documents :', response.documents);
         dispatch(loadproduct(response.documents))
         
     }catch(err){

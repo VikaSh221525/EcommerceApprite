@@ -10,6 +10,10 @@ const wishlistSlice = createSlice({
     name: 'wishlist',
     initialState,
     reducers: {
+        loadWishlist : (state, action) => {
+            state.wishlistItems = action.payload
+            localStorage.setItem("wishlistItems", JSON.stringify(state.wishlistItems));
+        },
         addToWishlist: (state, action) => {
             const exists = state.wishlistItems.find(item => item.$id === action.payload.$id);
             if(!exists){
@@ -29,4 +33,4 @@ const wishlistSlice = createSlice({
 })
 
 export default wishlistSlice.reducer;
-export const {addToWishlist, removeFromWishlist, clearWishlist} = wishlistSlice.actions;
+export const {loadWishlist, addToWishlist, removeFromWishlist, clearWishlist} = wishlistSlice.actions;

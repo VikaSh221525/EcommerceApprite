@@ -1,6 +1,6 @@
 import { ID, Query } from "appwrite";
 import { databases } from "../../lib/appwrite";
-import { addToWishlist, removeFromWishlist } from "../reducers/WishlistSlice";
+import { addToWishlist, loadWishlist, removeFromWishlist } from "../reducers/WishlistSlice";
 
 const DB_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID;
 const WISHLIST_COLLECTION_ID = import.meta.env.VITE_APPWRITE_WISHLIST_COLLECTION_ID;
@@ -28,15 +28,20 @@ export const asyncAddToWishlist = (product, userId) => async (dispatch, getState
 
 export const asyncGetWishlist = (userId) => async (dispatch, getState) =>{
     try{
+        const allProducts = getState().product.products;
+        if(!allProducts || allProducts.length === 0) return;
+
         const res = await databases.listDocuments(DB_ID, WISHLIST_COLLECTION_ID, [
             Query.equal('userId', userId)
         ])
-        const products = res.documents.map(doc => doc.product);
-        products.forEach((product)=> dispatch(addToWishlist(product)))
+        const wishlistProducts = res.documents.map(wishlistItem => {
+            return allProducts.find(p => p.$id === wishlistItem.productId);
+        }).filter(Boolean);
+
+        dispatch(loadWishlist(wishlistProducts))
 
     }catch(err){
         console.log('GetWishlist Error: ', err);
-        
     }
 }
 

@@ -14,7 +14,7 @@ export const asyncgetcart = () => async (dispatch, getState) => {
 
         const allProducts = getState().product.products;
         if(!allProducts || allProducts.length === 0){
-            console.log("Product list is not loaded yet.");
+            console.log("Product list is not loaded yet. Please Wait..");
             return;
         }
 

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const Wishlist = () => {
     const wishlistItems = useSelector((state) => state.wishlist.wishlistItems);
-    console.log(wishlistItems);
+    // console.log(wishlistItems);
 
     return (
         <div className="w-full min-h-screen bg-gray-50">
