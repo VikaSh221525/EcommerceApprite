@@ -65,9 +65,11 @@ const Nav = () => {
                             <div className='flex gap-2 items-center'>
                                 <i class="ri-user-3-line text-gray-400 group-hover:text-blue-500"></i> <p className='text-gray-400 group-hover:text-blue-500'>Account</p>
                             </div>
-                            <div className='absolute top-full -right-14 bg-sky-50 shadow-lg rounded-md p-4 w-48 z-50 text-center opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity duration-200'>
-                                {currentUser?.isAdmin && (<NavLink to='/create-product' className='hover:text-blue-500'>Create Product</NavLink>)}
-                            </div>
+                            {currentUser?.isAdmin ?
+                                <div className='absolute top-full -right-14 bg-sky-50 shadow-lg rounded-md p-4 w-48 z-50 text-center opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity duration-200'>
+                                    <NavLink to='/create-product' className='hover:text-blue-500'>Create Product</NavLink>
+                                </div> : <></>
+                            }
                         </div>
                     </div>
                 </div>

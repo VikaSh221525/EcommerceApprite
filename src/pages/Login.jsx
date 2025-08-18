@@ -59,7 +59,7 @@ const Login = () => {
                                 </div>
                                 <div className='flex justify-between items-center'>
                                     <input type='submit' className='bg-blue-500 text-white px-12 py-2 rounded-4xl hover:bg-blue-600 transition duration-200 cursor-pointer shadow-md' value={`Login`} />
-                                    <NavLink className='text-blue-500 hover:underline'>Forgot Password?</NavLink>
+                                    <NavLink to='/forgot-password' className='text-blue-500 hover:underline'>Forgot Password?</NavLink>
                                 </div>
                             </form>
 

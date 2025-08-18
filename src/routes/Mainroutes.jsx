@@ -3,7 +3,8 @@ import { Route, Routes } from 'react-router-dom'
 import AuthWrapper from './AuthWrapper'
 import ScrollToTop from '../components/ScrollToTop'
 
-
+const ResetPassword = lazy(() => import('../pages/ResetPassword'))
+const ForgotPassword = lazy(() => import('../pages/ForgotPassword'))
 const Register = lazy(() => import('../pages/Register'))
 const PendingVerification = lazy(() => import('../pages/PendingVerification'));
 const Verify = lazy(() => import('../pages/Verify'))
@@ -40,6 +41,8 @@ const Mainroutes = () => {
                     <Route path='*' element={<PageNotFound />} />
                     <Route path='verify' element={<Verify/>} />
                     <Route path='pending-verification' element={<PendingVerification/>} />
+                    <Route path='forgot-password' element={<ForgotPassword/>} />
+                    <Route path='reset-password' element={<ResetPassword/>} />
                 </Routes>
             </Suspense>
         </>

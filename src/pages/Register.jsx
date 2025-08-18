@@ -22,7 +22,6 @@ const Register = () => {
 
             await account.deleteSession('current');
 
-
             const adminEmails = ['vikassharma221525@gmail.com'];
             const isAdmin = adminEmails.includes(user.email);
 
@@ -39,12 +38,10 @@ const Register = () => {
             )
 
             alert("Registeration successfull! Please check your email to verify your account before logging")
-            navigate('/login');
 
         } catch (err) {
             console.log("Register error:", err);
             alert(`Registeration failed!: ${err.message}`)
-
         }
     };
 
