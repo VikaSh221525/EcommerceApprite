@@ -11,7 +11,7 @@ const USERS_COLLECTION_ID = import.meta.env.VITE_APPWRITE_USERS_COLLECTION_ID;
 export const asyncLoginUser = (email, password) => async (dispatch, getState) =>{
     try{
 
-        // await account.deleteSessions();
+        await account.deleteSessions();
 
         await account.createEmailPasswordSession(email,password);
 

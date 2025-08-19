@@ -12,6 +12,7 @@ import { loginuser } from './store/reducers/UserSlice';
 import { asyncGetWishlist } from './store/actions/WishlistAction';
 import { asyncgetcart } from './store/actions/CartAction';
 import { asyncloadproducts } from './store/actions/ProductAction';
+import { account, databases } from './lib/appwrite';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -21,28 +22,73 @@ const App = () => {
   const preloaderRef = useRef(null);
   const loadingTextRef = useRef(null);
 
-  const [IsUserRestored, setIsUserRestored] = useState(false)
-  const currentUser = useSelector((state) => state.user.currentUser);
+  // const [IsUserRestored, setIsUserRestored] = useState(false)
+  // const currentUser = useSelector((state) => state.user.currentUser);
 
+
+  // useEffect(() => {
+  //   const user = JSON.parse(localStorage.getItem("currentUser"));
+  //   if (user) {
+  //     dispatch(loginuser(user));
+  //   }
+  //   setIsUserRestored(true);
+  // }, [dispatch])
+
+  // useEffect(() => {
+  //   if (showMain) {
+  //     dispatch(asyncloadproducts())
+
+  //     if (currentUser) {
+  //       dispatch(asyncGetWishlist(currentUser.$id));
+  //       dispatch(asyncgetcart());
+  //     }
+  //   }
+  // }, [showMain, dispatch, currentUser]);
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("currentUser"));
-    if (user) {
-      dispatch(loginuser(user));
-    }
-    setIsUserRestored(true);
-  }, [dispatch])
+    if (!showMain) return;
 
-  useEffect(() => {
-    if (showMain) {
-      dispatch(asyncloadproducts())
+    const initializeApp = async () => {
+      try {
+        dispatch(asyncloadproducts());
 
-      if (currentUser) {
-        dispatch(asyncGetWishlist(currentUser.$id));
+        const user = await account.get();
+        const response = await databases.listDocuments(
+          import.meta.env.VITE_APPWRITE_DATABASE_ID,
+          import.meta.env.VITE_APPWRITE_USERS_COLLECTION_ID,
+          [Query.equal("userId", user.$id)]
+        );
+        let userDoc = response.documents[0];
+
+        if (!userDoc) {
+          console.log("No profile found, creating one for new OAuth user...");
+          userDoc = await databases.createDocument(
+            import.meta.env.VITE_APPWRITE_DATABASE_ID,
+            import.meta.env.VITE_APPWRITE_USERS_COLLECTION_ID,
+            ID.unique(),
+            {
+              username: user.name, // name -> google
+              email: user.email,
+              userId: user.$id,
+              isAdmin: false
+            }
+          );
+        }
+        // Merge the Auth user and the database profile
+        const fulluser = { ...user, ...userDoc };
+        dispatch(loginuser(fulluser));
+
+        // Fetch data specific to the logged-in user
         dispatch(asyncgetcart());
+        dispatch(asyncGetWishlist(fulluser.$id));
+
+      } catch (err) {
+        console.log("No active session found.");
       }
     }
-  }, [showMain, dispatch, currentUser]);
+
+    initializeApp()
+  }, [showMain, dispatch])
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -81,7 +127,7 @@ const App = () => {
     }
   }, [count])
 
-  if (!IsUserRestored) return null;
+  // if (!IsUserRestored) return null;
   return (
     <>
       {!showMain && (

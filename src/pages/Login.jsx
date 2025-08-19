@@ -4,6 +4,8 @@ import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { asyncLoginUser } from '../store/actions/UserAction';
+import { account } from '../lib/appwrite';
+import { toast } from 'react-toastify';
 
 const Login = () => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
@@ -17,9 +19,22 @@ const Login = () => {
         navigate('/')
     }
 
+    const handleGoogleLogin = () => {
+        try {
+            account.createOAuth2Session(
+                'google',
+                `${import.meta.env.VITE_APP_URL}/`,
+                `${import.meta.env.VITE_APP_URL}/login`
+            )
+        } catch (err) {
+            console.log("Failed to initiate google login", err);
+            toast.error("could not connect to google.")
+        }
+    }
+
     const [showPassword, setshowPassword] = useState(false);
 
-    const togglepasswordvisibility = () =>{
+    const togglepasswordvisibility = () => {
         setshowPassword(!showPassword)
     }
     return (
@@ -64,7 +79,10 @@ const Login = () => {
                             </form>
 
                             <div className='mt-10'>
-                                <p className='text-gray-500 flex items-center gap-3'>Create account with <span><img src="/facebook.png" alt="" /></span> <span><img src="/google.png" alt="" /></span> </p>
+                                <p className='text-gray-500 flex items-center gap-3'>Create account with 
+                                    <span><img src="/facebook.png" alt="" /></span>
+                                    <span onClick={handleGoogleLogin} className='cursor-pointer'><img src="/google.png" alt="Google Login" /></span>
+                                </p>
                             </div>
                             <div className='mt-5'>
                                 <p className='text-gray-500'>Don't have an account? <Link to='/register' className='text-blue-500 cursor-pointer hover:underline'>Register</Link></p>
