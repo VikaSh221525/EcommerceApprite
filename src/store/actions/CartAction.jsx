@@ -41,7 +41,6 @@ export const asyncgetcart = () => async (dispatch, getState) => {
 }
 
 export const asyncaddtocart = (product) => async (dispatch, getState) => {
-    console.log(product);
     
     try {
         const userId = getState().user.currentUser?.$id;

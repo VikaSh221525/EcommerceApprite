@@ -5,7 +5,7 @@ import { asyncgetcart, asyncremovefromcart, asyncUpdateQuantity } from '../store
 const Cart = () => {
     const dispatch = useDispatch()
     const cartItems = useSelector((state) => state.cart.cartItems);
-    console.log(cartItems);
+    // console.log(cartItems);
     
 
     useEffect(() => {

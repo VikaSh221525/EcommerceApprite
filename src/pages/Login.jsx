@@ -81,7 +81,7 @@ const Login = () => {
                             <div className='mt-10'>
                                 <p className='text-gray-500 flex items-center gap-3'>Create account with 
                                     <span><img src="/facebook.png" alt="" /></span>
-                                    <span onClick={handleGoogleLogin} className='cursor-pointer'><img src="/google.png" alt="Google Login" /></span>
+                                    <span className='cursor-pointer'><img src="/google.png" alt="Google Login" /></span>
                                 </p>
                             </div>
                             <div className='mt-5'>
