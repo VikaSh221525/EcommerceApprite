@@ -27,21 +27,21 @@ const ResetPassword = () => {
 
             await account.updateRecovery(userId, secret, newPassword, confirmPassword);
 
-            const user = await account.get();
-            const response = await databases.listDocuments(
-                import.meta.env.VITE_APPWRITE_DATABASE_ID,
-                import.meta.env.VITE_APPWRITE_USERS_COLLECTION_ID,
-                [Query.equal("userId", user.$id)]
-            );
-            const userDoc = response.documents[0];
-            const fulluser = { ...user, ...userDoc };
-            dispatch(loginuser(fulluser));
+            // const user = await account.get();
+            // const response = await databases.listDocuments(
+            //     import.meta.env.VITE_APPWRITE_DATABASE_ID,
+            //     import.meta.env.VITE_APPWRITE_USERS_COLLECTION_ID,
+            //     [Query.equal("userId", user.$id)]
+            // );
+            // const userDoc = response.documents[0];
+            // const fulluser = { ...user, ...userDoc };
+            // dispatch(loginuser(fulluser));
 
             toast.success("Password reset successfully! You can now log in with your new password.");
             navigate('/')
         } catch (err) {
             console.log("ResetPassword Error: ", err);
-            setError(err)
+            setError(err.message)
         }
     }
 
