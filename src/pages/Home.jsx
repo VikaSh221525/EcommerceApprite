@@ -106,27 +106,31 @@ const Home = () => {
             </div>
 
             {/* what we offer */}
-            <div className='w-full grid grid-cols-1 sm:grid-cols-3 items-start gap-10 py-16 px-4 sm:px-6 md:px-10 lg:px-20'>
-                <div className='flex flex-col items-center justify-center gap-3 text-center px-6'>
-                    <img srcset="" sizes="(min-width: 990px) 100vw, 100vw" src="//elexy-demo.myshopify.com/cdn/shop/files/text-icon-1.svg?v=1720505997&amp;width=375" alt="" loading="lazy" width="78" height="64" />
-                    <h1 className='text-base sm:text-lg font-semibold'>Free Shipping</h1>
-                    <p className='text-gray-400'>Buy product over $100 and get free home delivery offer</p>
-                </div>
-                <div className='hidden sm:block w-full h-[1px] sm:h-full sm:w-[1px] bg-black/10 sm:bg-black/40 sm:justify-self-center'></div>
-                <div className='flex flex-col items-center justify-center gap-3 text-center px-6'>
-                    <img srcset="" sizes="(min-width: 990px) 100vw, 100vw" src="//elexy-demo.myshopify.com/cdn/shop/files/text-icon-2.svg?v=1720582346&amp;width=375" alt="" loading="lazy" width="78" height="66" />
-                    <h1 className='text-base sm:text-lg font-semibold'>Easy Return Policy</h1>
-                    <p className='text-gray-400'>Provide 30 day easy Return policy for all of our customer</p>
-                </div>
-                <div className='hidden sm:block w-full h-[1px] sm:h-full sm:w-[1px] bg-black/10 sm:bg-black/40 sm:justify-self-center'></div>
-                <div className='flex flex-col items-center justify-center gap-3 text-center px-6'>
-                    <img srcset="" sizes="(min-width: 990px) 100vw, 100vw" src="//elexy-demo.myshopify.com/cdn/shop/files/text-icon-3.svg?v=1720582346&amp;width=375" alt="" loading="lazy" width="78" height="66" />
-                    <h1 className='text-base sm:text-lg font-semibold'>Secure Payment</h1>
-                    <p className='text-gray-400'>We conform you that payment system are totally secure</p>
+            <div className='w-full py-16 px-4 sm:px-6 md:px-10 lg:px-20'>
+                <div className='flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-12 lg:gap-16'>
+                    <div className='flex flex-col items-center justify-center gap-3 text-center px-6 flex-1'>
+                        <img srcSet="" sizes="(min-width: 990px) 100vw, 100vw" src="//elexy-demo.myshopify.com/cdn/shop/files/text-icon-1.svg?v=1720505997&amp;width=375" alt="" loading="lazy" width="78" height="64" />
+                        <h1 className='text-base sm:text-lg font-semibold'>Free Shipping</h1>
+                        <p className='text-gray-400 text-sm sm:text-base'>Buy product over $100 and get free home delivery offer</p>
+                    </div>
+
+                    <div className='hidden sm:block w-full h-[1px] sm:h-24 sm:w-[1px] bg-gray-300'></div>
+
+                    <div className='flex flex-col items-center justify-center gap-3 text-center px-6 flex-1'>
+                        <img srcSet="" sizes="(min-width: 990px) 100vw, 100vw" src="//elexy-demo.myshopify.com/cdn/shop/files/text-icon-2.svg?v=1720582346&amp;width=375" alt="" loading="lazy" width="78" height="66" />
+                        <h1 className='text-base sm:text-lg font-semibold'>Easy Return Policy</h1>
+                        <p className='text-gray-400 text-sm sm:text-base'>Provide 30 day easy Return policy for all of our customer</p>
+                    </div>
+
+                    <div className='hidden sm:block w-full h-[1px] sm:h-24 sm:w-[1px] bg-gray-300'></div>
+
+                    <div className='flex flex-col items-center justify-center gap-3 text-center px-6 flex-1'>
+                        <img srcSet="" sizes="(min-width: 990px) 100vw, 100vw" src="//elexy-demo.myshopify.com/cdn/shop/files/text-icon-3.svg?v=1720582346&amp;width=375" alt="" loading="lazy" width="78" height="66" />
+                        <h1 className='text-base sm:text-lg font-semibold'>Secure Payment</h1>
+                        <p className='text-gray-400 text-sm sm:text-base'>We conform you that payment system are totally secure</p>
+                    </div>
                 </div>
             </div>
-
-
         </>
     )
 }
