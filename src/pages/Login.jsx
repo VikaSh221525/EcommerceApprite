@@ -40,10 +40,10 @@ const Login = () => {
     return (
         <>
             <div className='w-full min-h-screen'>
-                <h1 className='text-3xl font-semibold w-full bg-gray-100 px-20 py-5'>Login/Register</h1>
-                <div className='flex justify-center items-center w-full py-15'>
-                    <div className='w-[60rem] mx-auto flex flex-row bg-gray-100 rounded-2xl'>
-                        <div className='w-1/2 bg-blue-500 rounded-2xl overflow-hidden relative'>
+                <h1 className='text-2xl sm:text-3xl font-semibold w-full bg-gray-100 px-4 sm:px-6 md:px-10 lg:px-20 py-4 sm:py-5'>Login/Register</h1>
+                <div className='flex justify-center items-center w-full py-10 px-4 sm:px-6'>
+                    <div className='w-full max-w-[60rem] mx-auto flex flex-col md:flex-row bg-gray-100 rounded-2xl overflow-hidden'>
+                        <div className='hidden md:block md:w-1/2 bg-blue-500 rounded-2xl overflow-hidden relative'>
                             <DotLottieReact
                                 src="/Loginplan.lottie"
                                 loop
@@ -53,10 +53,10 @@ const Login = () => {
                             />
                             <h1 className='absolute text-3xl text-white top-5 left-5 font-bold'>TechPulse</h1>
                         </div>
-                        <div className='w-1/2 px-10 pt-20 pb-15'>
+                        <div className='w-full md:w-1/2 px-6 sm:px-10 pt-10 md:pt-20 pb-10 md:pb-15'>
                             <form onSubmit={handleSubmit(LoginHandler)} className='flex flex-col gap-7'>
                                 <div>
-                                    <h1 className='text-[2rem] font-bold '>Welcome to TechPulse!</h1>
+                                    <h1 className='text-[1.6rem] sm:text-[2rem] font-bold '>Welcome to TechPulse!</h1>
                                     <p className='text-gray-500'>Login your account</p>
                                 </div>
                                 <div>
@@ -72,16 +72,16 @@ const Login = () => {
                                     </div>
                                     {errors.password && <p className='text-red-500 text-sm'>{errors.password.message}</p>}
                                 </div>
-                                <div className='flex justify-between items-center'>
-                                    <input type='submit' className='bg-blue-500 text-white px-12 py-2 rounded-4xl hover:bg-blue-600 transition duration-200 cursor-pointer shadow-md' value={`Login`} />
-                                    <NavLink to='/forgot-password' className='text-blue-500 hover:underline'>Forgot Password?</NavLink>
+                                <div className='flex flex-col sm:flex-row gap-4 sm:gap-6 justify-between items-stretch sm:items-center'>
+                                    <input type='submit' className='bg-blue-500 text-white px-12 py-2 rounded-4xl hover:bg-blue-600 transition duration-200 cursor-pointer shadow-md w-full sm:w-auto' value={`Login`} />
+                                    <NavLink to='/forgot-password' className='text-blue-500 hover:underline text-center sm:text-left'>Forgot Password?</NavLink>
                                 </div>
                             </form>
 
                             <div className='mt-10'>
                                 <p className='text-gray-500 flex items-center gap-3'>Create account with 
-                                    <span><img src="/facebook.png" alt="" /></span>
-                                    <span className='cursor-pointer'><img src="/google.png" alt="Google Login" /></span>
+                                    <span><img src="/facebook.png" alt="Facebook Login" className='w-6 h-6'/></span>
+                                    <span className='cursor-pointer'><img src="/google.png" alt="Google Login" className='w-6 h-6'/></span>
                                 </p>
                             </div>
                             <div className='mt-5'>

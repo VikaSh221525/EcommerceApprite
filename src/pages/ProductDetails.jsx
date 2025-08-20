@@ -54,7 +54,7 @@ const ProductDetails = () => {
     const isInCart = !!existingCartItem;
 
     const handleAddToCart = (product) => {
-        console.log('addto cart clicked');
+        // console.log('addto cart clicked');
 
         if (!currentUser) {
             alert("please login to add items to you cart");
@@ -62,24 +62,25 @@ const ProductDetails = () => {
         }
         dispatch(asyncaddtocart(product));
     }
+
     return (
         <>
-            <div className='w-full min-h-screen px-20 py-20'>
-                <div className='flex justify-between'>
-                    <div className='w-[50%]'>
-                        <img className='object-cover w-full h-full rounded-3xl' src={product?.image} alt={product?.title} />
+            <div className='w-full min-h-screen px-4 sm:px-6 md:px-10 lg:px-20 py-10 md:py-20'>
+                <div className='flex flex-col lg:flex-row justify-between gap-10'>
+                    <div className='w-full lg:w-1/2'>
+                        <img className='object-cover w-full h-auto rounded-3xl' src={product?.image} alt={product?.title} />
                     </div>
-                    <div className='w-[40%] flex flex-col gap-5'>
-                        <p>Home/{product?.category} </p>
-                        <h1 className='text-4xl font-semibold'>{product?.title}</h1>
-                        <p className='text-lg text-gray-700'>{product?.description}</p>
-                        <span className='text-2xl font-bold text-green-600'>Rs. {product?.price}</span>
-                        {product?.discount > 0 && <span className='text-red-500 text-lg'>Discount: {product?.discount}%</span>}
-                        <div className='flex items-center gap-3'>
-                            <button onClick={() => handleAddToCart(product)} className='py-3 px-8 bg-white text-black hover:bg-black hover:text-white transition-colors duration-200 w-fit rounded-4xl cursor-pointer outline'>
+                    <div className='w-full lg:w-[40%] flex flex-col gap-4 md:gap-5'>
+                        <p className='text-sm text-gray-500'>Home/{product?.category} </p>
+                        <h1 className='text-2xl sm:text-3xl md:text-4xl font-semibold'>{product?.title}</h1>
+                        <p className='text-base md:text-lg text-gray-700'>{product?.description}</p>
+                        <span className='text-xl md:text-2xl font-bold text-green-600'>Rs. {product?.price}</span>
+                        {product?.discount > 0 && <span className='text-red-500 text-base md:text-lg'>Discount: {product?.discount}%</span>}
+                        <div className='flex flex-col sm:flex-row items-stretch sm:items-center gap-3'>
+                            <button onClick={() => handleAddToCart(product)} className='py-3 px-6 sm:px-8 bg-white text-black hover:bg-black hover:text-white transition-colors duration-200 w-full sm:w-fit rounded-4xl cursor-pointer outline'>
                                 {isInCart ? `In Cart (${existingCartItem.quantity})` : "Add to Cart"}
                             </button>
-                            <button className='py-3 px-8 bg-gray-200 text-black w-fit rounded-4xl cursor-pointer flex gap-2' onClick={toggleWishlist}>
+                            <button className='py-3 px-6 sm:px-8 bg-gray-200 text-black w-full sm:w-fit rounded-4xl cursor-pointer flex items-center justify-center gap-2' onClick={toggleWishlist}>
                                 {isInWishlist ? (
                                     <><i class="ri-check-line"></i> <span>Remove from Wishlist</span></>
                                 ) : (
@@ -87,7 +88,7 @@ const ProductDetails = () => {
                                 )}
                             </button>
                         </div>
-                        <button className='py-3 px-8 bg-black text-white rounded-4xl cursor-pointer'>Buy Now</button>
+                        <button className='py-3 px-6 sm:px-8 bg-black text-white rounded-4xl cursor-pointer w-full lg:w-auto'>Buy Now</button>
                         {currentUser?.isAdmin && (<NavLink to={`/update-product/${product?.$id}`} className="py-3 px-8 bg-blue-500 text-white rounded-4xl cursor-pointer text-center">
                             Update Product
                         </NavLink>)}
