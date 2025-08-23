@@ -1,12 +1,13 @@
 import { Search, ChartColumnStacked } from 'lucide-react'
 import { motion } from "motion/react"
 import { useDispatch, useSelector } from 'react-redux'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { asyncLogoutUser } from '../store/actions/UserAction'
 import { useEffect, useRef, useState } from 'react'
 
 const Nav = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const currentUser = useSelector((state) => state.user.currentUser)
     const { products } = useSelector((state) => state.product);
 
@@ -221,18 +222,22 @@ const Nav = () => {
                     </div>
                 </div>
                 {searchResults.length > 0 && (
-                    <div className='mt-3 rounded-lg shadow-sm max-h-[60vh] overflow-y-auto border border-gray-100'>
+                    <div className='mt-3 rounded-lg shadow-sm max-h-[60vh] overflow-y-auto border border-gray-100 z-100'>
                         <ul>
                             {searchResults.map((product) => (
                                 <li key={product.$id}>
-                                    <NavLink
-                                        to={`/product/${product.$id}`}
-                                        className='flex items-center p-3 hover:bg-gray-100 transition-colors duration-150'
-                                        onClick={() => { handleResultClick(); setIsMobileSearchOpen(false); }}
+                                    <button
+                                        type="button"
+                                        className='flex items-center w-full text-left p-3 hover:bg-gray-100 transition-colors duration-150'
+                                        onMouseDown={() => {
+                                            handleResultClick();
+                                            setIsMobileSearchOpen(false);
+                                            navigate(`/product/${product.$id}`);
+                                        }}
                                     >
                                         <img src={product.image} alt="image" className='w-12 h-12 object-contain mr-4' />
                                         <span className='font-medium text-gray-700'>{product.title}</span>
-                                    </NavLink>
+                                    </button>
                                 </li>
                             ))}
                         </ul>
